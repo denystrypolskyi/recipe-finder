@@ -14,23 +14,24 @@ const ResultPage = () => {
   const [dishInstructions, setDishInstructions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+console.log(process.env.REACT_APP_SPOONACULAR_API_KEY);
 
   const fetchDishData = useCallback(async () => {
     try {
-      const urlDishInfo = `https://api.spoonacular.com/recipes/complexSearch?query=${query}&apiKey=${process.env.SPOONACULAR_API_KEY}`;
+      const urlDishInfo = `https://api.spoonacular.com/recipes/complexSearch?query=${query}&apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}`;
       const {
         data: { results },
       } = await axios.get(urlDishInfo);
       const [newDishInfo] = results;
       setDishInfo(newDishInfo);
 
-      const urlDishIngredients = `https://api.spoonacular.com/recipes/${newDishInfo.id}/ingredientWidget.json?apiKey=${process.env.SPOONACULAR_API_KEY}`;
+      const urlDishIngredients = `https://api.spoonacular.com/recipes/${newDishInfo.id}/ingredientWidget.json?apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}`;
       const {
         data: { ingredients },
       } = await axios.get(urlDishIngredients);
       setDishIngredients(ingredients);
 
-      const urlDishInstructions = `https://api.spoonacular.com/recipes/${newDishInfo.id}/analyzedInstructions?apiKey=${process.env.SPOONACULAR_API_KEY}`;
+      const urlDishInstructions = `https://api.spoonacular.com/recipes/${newDishInfo.id}/analyzedInstructions?apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}`;
       const {
         data: [instructionsData],
       } = await axios.get(urlDishInstructions);
